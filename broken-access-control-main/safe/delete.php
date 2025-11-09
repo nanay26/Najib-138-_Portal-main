@@ -11,7 +11,7 @@ if (!$uuid) { http_response_code(400); exit('Missing uuid'); }
 
 // verify ownership
 $stmt = $pdo->prepare("SELECT user_id FROM items_safe WHERE uuid = :u LIMIT 1");
-$stmt->execute([':u'=>$uuid]);
+$stmt->execute(params:[':u'=>$uuid]);
 $item = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$item) { http_response_code(404); exit('Not found'); }
 if ($item['user_id'] != $_SESSION['user']['id']) { http_response_code(403); exit('Forbidden'); }
